@@ -13,7 +13,7 @@ public class SystemPolicy {
     @Column(nullable = false, unique = true)
     private String policyKey; // e.g., MAX_USER_WATTAGE, PEAK_HOUR_LIMIT
 
-    @Column(nullable = false)
+    @Column(name = "`value`", nullable = false)
     private Double value;
 
     @Column(nullable = false)

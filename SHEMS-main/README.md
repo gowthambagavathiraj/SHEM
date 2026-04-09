@@ -1,36 +1,102 @@
 # Smart Home Energy Management System (SHEMS)
 
-SHEMS is a full-stack application designed to monitor, manage, and optimize energy consumption in smart homes.
+SHEMS is a full-stack application for monitoring, managing, and optimizing energy consumption in smart homes.
 
-## 🛠️ Technical Tools & Stack
+## Repository Layout
 
-### Backend
-- **Core Framework**: [Spring Boot 3.2.5](https://spring.io/projects/spring-boot) (Java 17)
-- **Security**: [Spring Security](https://spring.io/projects/spring-security) with **JWT (JSON Web Tokens)** for stateless authentication.
-- **Data Access**: [Spring Data JPA](https://spring.io/projects/spring-data-jpa) with **Hibernate**.
-- **Database**: **H2 Database** (Local/Development) and **MySQL** compatibility.
-- **API Documentation**: [SpringDoc OpenAPI/Swagger](https://springdoc.org/) for interactive API testing.
-- **PDF Generation**: [iText7](https://itextpdf.com/products/itext-7) for generating energy reports.
-- **Utilities**: [Lombok](https://projectlombok.org/) for reducing boilerplate code.
+- `frontend/` — React + Vite user interface
+- `src/` — Spring Boot backend Java source
+- `pom.xml` — backend Maven configuration
+- `mvnw`, `mvnw.cmd` — Maven wrapper for building the backend
+- `.gitignore` — ignores generated build artifacts, logs, DB files, and node_modules
 
-### Frontend
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/) for smooth UI transitions.
-- **Charts**: [Recharts](https://recharts.org/) for visualizing energy usage data.
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Routing**: [React Router DOM](https://reactrouter.com/)
-- **API Client**: [Axios](https://axios-http.com/)
+## Prerequisites
 
-### Dev & Build Tools
-- **Build System**: Maven
-- **Version Control**: Git & GitHub
-- **Environment**: Visual Studio Code / Spring Tool Suite (STS)
+- Java 17
+- Maven (or use the included Maven wrapper)
+- Node 20+ and npm
+- Git for source control
 
-## 🚀 Key Features
-- **Real-time Monitoring**: Track energy usage across devices.
-- **Smart Scheduling**: Automate device operations to save energy.
-- **Personalized Recommendations**: AI-driven insights for energy saving.
-- **Secure Authentication**: Multi-role support (Homeowner, Admin).
-- **Comprehensive Reporting**: Downloadable PDF energy reports.
+## Setup
+
+1. Open a terminal and navigate to the project root:
+
+   ```powershell
+   cd SHEMS-main
+   ```
+
+2. Install frontend dependencies:
+
+   ```powershell
+   npm run frontend:install
+   ```
+
+3. Build or run the backend using Maven:
+
+   ```powershell
+   .\mvnw.cmd spring-boot:run
+   ```
+
+   or build the backend package:
+
+   ```powershell
+   .\mvnw.cmd clean package
+   ```
+
+## Run Locally
+
+- Start the backend:
+
+  ```powershell
+  .\mvnw.cmd spring-boot:run
+  ```
+
+- Start the frontend in development mode:
+
+  ```powershell
+  npm run frontend:dev
+  ```
+
+The backend runs on `http://localhost:8080` and the frontend runs on `http://localhost:5173` by default.
+
+## Production Build
+
+1. Build the frontend assets:
+
+   ```powershell
+   npm run frontend:build
+   ```
+
+2. Build the backend JAR:
+
+   ```powershell
+   .\mvnw.cmd clean package
+   ```
+
+3. Run the assembled backend application:
+
+   ```powershell
+   java -jar target/backend-0.0.1-SNAPSHOT.jar
+   ```
+
+## GitHub Setup
+
+To add this project to GitHub:
+
+```powershell
+cd SHEMS-main
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/<username>/<repo>.git
+git push -u origin main
+```
+
+Replace `<username>` and `<repo>` with your GitHub username and repository name.
+
+## Notes
+
+- The frontend asset build is copied into the backend static resources during packaging.
+- Existing database files such as `shems_db.mv.db` and `shems_db.trace.db` are ignored by `.gitignore`.
+- Use the Maven wrapper scripts so the project builds consistently across machines.
