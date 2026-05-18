@@ -31,12 +31,13 @@ const Register = () => {
             console.log("Registered successfully");
             navigate('/login');
         } catch (err) {
-            const msg = err.response?.data;
-            if (typeof msg === 'object') {
-                setError(Object.values(msg).join(", "));
-            } else {
-                setError(msg || "Registration failed. Please try again.");
-            }
+            const responseData = err.response?.data;
+            const msg =
+                typeof responseData === 'string'
+                    ? responseData
+                    : responseData?.message || responseData?.error;
+
+            setError(msg || "Registration failed. Please try again.");
             console.error("Registration Error", err);
         } finally {
             setLoading(false);

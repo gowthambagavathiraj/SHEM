@@ -44,25 +44,29 @@ public class AuthService {
     // REGISTER USER
     // =========================
     public void register(RegisterRequestDto request) {
+        String normalizedEmail = request.getEmail().trim().toLowerCase();
+        String normalizedPhone = request.getPhoneNumber().trim();
+        String normalizedFullName = request.getFullName().trim();
+        String normalizedRole = request.getRole().trim().toUpperCase();
 
-        if (userRepository.existsByEmail(request.getEmail().toLowerCase())) {
-            throw new RuntimeException("mailid existed");
+        if (userRepository.existsByEmail(normalizedEmail)) {
+            throw new RuntimeException("Email is already registered");
         }
 
-        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+        if (userRepository.existsByPhoneNumber(normalizedPhone)) {
             throw new RuntimeException("Phone number already registered");
         }
 
         User user = new User();
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail().toLowerCase());
-        user.setPhoneNumber(request.getPhoneNumber());
+        user.setFullName(normalizedFullName);
+        user.setEmail(normalizedEmail);
+        user.setPhoneNumber(normalizedPhone);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         // 🔥 Set Role Dynamically
         Role role;
         try {
-            role = Role.valueOf(request.getRole().toUpperCase());
+            role = Role.valueOf(normalizedRole);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid role selected");
         }
@@ -77,7 +81,7 @@ public class AuthService {
                 throw new RuntimeException("Specialization is required for Technician");
             }
 
-            user.setSpecialization(request.getSpecialization());
+            user.setSpecialization(request.getSpecialization().trim());
         }
 
         userRepository.save(user);
