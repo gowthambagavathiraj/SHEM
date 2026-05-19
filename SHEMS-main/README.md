@@ -57,7 +57,7 @@ SHEMS is a full-stack application for monitoring, managing, and optimizing energ
   npm run frontend:dev
   ```
 
-The backend runs on `http://localhost:8080` and the frontend runs on `http://localhost:5173` by default.
+The backend runs on `http://localhost:8082` and the frontend runs on `http://localhost:5173` by default.
 
 ## Production Build
 

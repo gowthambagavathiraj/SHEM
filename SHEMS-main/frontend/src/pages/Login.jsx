@@ -22,12 +22,18 @@ const Login = () => {
             console.log("OTP requested successfully");
             setStep(2); // Move to OTP step
         } catch (err) {
-            const msg = err.response?.data;
-            if (typeof msg === 'object') {
-                setError(Object.values(msg).join(", "));
-            } else {
-                setError(msg || "Wrong user or invalid credentials.");
-            }
+            const responseData = err.response?.data;
+            const backendMessage =
+                typeof responseData === 'string'
+                    ? responseData
+                    : responseData?.message || responseData?.error;
+
+            const msg = backendMessage
+                || (err.request
+                    ? "Unable to reach the server. Make sure the backend is running on http://localhost:8082."
+                    : "Login failed. Please try again.");
+
+            setError(msg);
             console.error("Login Error", err);
         } finally {
             setLoading(false);
@@ -46,12 +52,18 @@ const Login = () => {
             console.log("Logged in successfully as", role);
             navigate('/dashboard');
         } catch (err) {
-            const msg = err.response?.data;
-            if (typeof msg === 'object') {
-                setError(Object.values(msg).join(", "));
-            } else {
-                setError(msg || "Invalid OTP. Please try again.");
-            }
+            const responseData = err.response?.data;
+            const backendMessage =
+                typeof responseData === 'string'
+                    ? responseData
+                    : responseData?.message || responseData?.error;
+
+            const msg = backendMessage
+                || (err.request
+                    ? "Unable to reach the server. Make sure the backend is running on http://localhost:8082."
+                    : "OTP verification failed. Please try again.");
+
+            setError(msg);
             console.error("OTP Error", err);
         } finally {
             setLoading(false);
